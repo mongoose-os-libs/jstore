@@ -1,0 +1,15 @@
+author: mongoose-os
+type: lib
+description: JSON Store
+version: 1.0
+
+sources:
+  - src
+includes:
+  - include
+
+tags:
+  - c
+  - core
+
+manifest_version: 2017-09-29
