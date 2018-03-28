@@ -1,6 +1,6 @@
 all: test
 
-JSTORE_INCDIRS = -I. -I../src -I../include -I../../.. -I../../../fw/src -I../../../fw/include
+JSTORE_INCDIRS = -I. -I../src -I../include -I../../.. -I../../../fw/src -I../../../fw/include -I../../../frozen
 JSTORE_SRC = jstore_test.c ../src/mgos_jstore.c \
              ../../../common/cs_file.c \
              ../../../common/cs_dbg.c \

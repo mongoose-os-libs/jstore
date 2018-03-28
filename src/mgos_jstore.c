@@ -13,7 +13,7 @@
 #include "common/mg_str.h"
 #include "common/queue.h"
 #include "common/str_util.h"
-#include "frozen/frozen.h"
+#include "frozen.h"
 #include "mgos.h"
 #include "mgos_app.h"
 
