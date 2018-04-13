@@ -19,6 +19,7 @@
 #define CS_MOS_LIBS_JSTORE_SRC_MGOS_JSTORE_H_
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "common/mg_str.h"
 #include "mgos_init.h"
