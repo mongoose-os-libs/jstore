@@ -11,6 +11,7 @@ includes:
 tags:
   - c
   - core
+  - docs:misc:JSON store
 
 manifest_version: 2017-09-29
 
