@@ -187,8 +187,8 @@ static void jstore_json_walk_cb(void *callback_data, const char *name,
       switch (token->type) {
         case JSON_TYPE_STRING:
           ctx->cur_item_id = mg_mk_str_n(token->ptr, token->len);
-          LOG(LL_DEBUG,
-              ("Got id: '%.*s'", ctx->cur_item_id.len, ctx->cur_item_id.p));
+          LOG(LL_DEBUG, ("Got id: '%.*s'", (int) ctx->cur_item_id.len,
+                         ctx->cur_item_id.p));
           ctx->state = PARSE_STATE_ITEM_VALUE;
           break;
 
@@ -233,13 +233,13 @@ static void jstore_json_walk_cb(void *callback_data, const char *name,
           if (token->type == JSON_TYPE_STRING) {
             ctx->cur_item_data = mg_mk_str_n(token->ptr - 1, token->len + 2);
           }
-          LOG(LL_DEBUG, ("Got data: '%.*s'", ctx->cur_item_data.len,
+          LOG(LL_DEBUG, ("Got data: '%.*s'", (int) ctx->cur_item_data.len,
                          ctx->cur_item_data.p));
           ctx->state = PARSE_STATE_ITEM_END;
         } else if (ctx->value_depth < 0) {
           mg_asprintf(&ctx->err, 0,
                       "failed to parse jstore JSON: no value for id '%.*s'",
-                      ctx->cur_item_id.len, ctx->cur_item_id.p);
+                      (int) ctx->cur_item_id.len, ctx->cur_item_id.p);
         }
       }
       break;
