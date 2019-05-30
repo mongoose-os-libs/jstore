@@ -2,35 +2,37 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mgos_jstore.h"
 #include "common/cs_file.h"
+#include "mgos_jstore.h"
 
 static int s_num_tests = 0;
 
-#define STRINGIFY_MG_STR(a) \
+#define STRINGIFY_MG_STR(a)                                                    \
   (mg_mk_str_n((STRINGIFY(a)) + 1, strlen(STRINGIFY(a)) - 2))
 #define STRINGIFY(a) STRINGIFY2(a)
 #define STRINGIFY2(a) #a
 
-#define FAIL(str, line)                           \
-  do {                                            \
-    printf("Fail on line %d: [%s]\n", line, str); \
-    return str;                                   \
+#define FAIL(str, line)                                                        \
+  do {                                                                         \
+    printf("Fail on line %d: [%s]\n", line, str);                              \
+    return str;                                                                \
   } while (0)
 
-#define ASSERT(expr)                    \
-  do {                                  \
-    s_num_tests++;                      \
-    if (!(expr)) FAIL(#expr, __LINE__); \
+#define ASSERT(expr)                                                           \
+  do {                                                                         \
+    s_num_tests++;                                                             \
+    if (!(expr))                                                               \
+      FAIL(#expr, __LINE__);                                                   \
   } while (0)
 
-#define RUN_TEST(test)        \
-  do {                        \
-    const char *msg = test(); \
-    if (msg) return msg;      \
+#define RUN_TEST(test)                                                         \
+  do {                                                                         \
+    const char *msg = test();                                                  \
+    if (msg)                                                                   \
+      return msg;                                                              \
   } while (0)
 
-#define HOURS(x) ((x) *60 * 60)
+#define HOURS(x) ((x)*60 * 60)
 
 struct jstore_expected_item {
   struct mg_str id;
@@ -48,7 +50,7 @@ struct jstore_expected {
 static bool item_compare(struct mgos_jstore *store, int idx,
                          mgos_jstore_item_hnd_t hnd, const struct mg_str *id,
                          const struct mg_str *data, void *userdata) {
-  struct jstore_expected *expected = (struct jstore_expected *) userdata;
+  struct jstore_expected *expected = (struct jstore_expected *)userdata;
 
   expected->items[idx].equal = true;
 
@@ -73,12 +75,11 @@ static bool item_compare(struct mgos_jstore *store, int idx,
   }
 
   if (!expected->items[idx].equal) {
-    printf(
-        "Item #%d: expected id: '%.*s', actual id: '%.*s'; expected data: "
-        "'%.*s', actual data: '%.*s'\n",
-        idx, expected->items[idx].id.len, expected->items[idx].id.p, id->len,
-        id->p, expected->items[idx].data.len, expected->items[idx].data.p,
-        data->len, data->p);
+    printf("Item #%d: expected id: '%.*s', actual id: '%.*s'; expected data: "
+           "'%.*s', actual data: '%.*s'\n",
+           idx, (int)expected->items[idx].id.len, expected->items[idx].id.p,
+           (int)id->len, id->p, (int) expected->items[idx].data.len,
+           expected->items[idx].data.p, (int) data->len, data->p);
   }
 
   return true;
@@ -169,10 +170,10 @@ static const char *s_test1(void) {
 
   /* Add items with an explicit id */
 
-  ASSERT(mgos_jstore_item_add(store, mg_mk_str("custom_id"),
-                              mg_mk_str("\"new data 1\""),
-                              MGOS_JSTORE_OWN_FOREIGN, MGOS_JSTORE_OWN_FOREIGN,
-                              NULL, NULL, NULL).p != NULL);
+  ASSERT(mgos_jstore_item_add(
+             store, mg_mk_str("custom_id"), mg_mk_str("\"new data 1\""),
+             MGOS_JSTORE_OWN_FOREIGN, MGOS_JSTORE_OWN_FOREIGN, NULL, NULL, NULL)
+             .p != NULL);
 
   expected.items[expected.items_cnt++] = (struct jstore_expected_item){
       .id = mg_mk_str("custom_id"), .data = mg_mk_str("\"new data 1\"")};
@@ -195,8 +196,8 @@ static const char *s_test1(void) {
 
   ASSERT(mgos_jstore_item_add(store, mg_mk_str(NULL),
                               mg_mk_str("\"new data 3\""), MGOS_JSTORE_OWN_COPY,
-                              MGOS_JSTORE_OWN_COPY, NULL, &index,
-                              NULL).p != NULL);
+                              MGOS_JSTORE_OWN_COPY, NULL, &index, NULL)
+             .p != NULL);
 
   expected.items[expected.items_cnt++] = (struct jstore_expected_item){
       .id = mg_mk_str(NULL), .data = mg_mk_str("\"new data 3\"")};
@@ -249,8 +250,8 @@ static const char *s_test1(void) {
 
   ASSERT(mgos_jstore_item_add(store, mg_mk_str("hey_id_4"),
                               mg_mk_str("\"new data 4\""), MGOS_JSTORE_OWN_COPY,
-                              MGOS_JSTORE_OWN_COPY, &hnd, NULL,
-                              NULL).p != NULL);
+                              MGOS_JSTORE_OWN_COPY, &hnd, NULL, NULL)
+             .p != NULL);
 
   expected.items[expected.items_cnt++] = (struct jstore_expected_item){
       .id = mg_mk_str(NULL), .data = mg_mk_str("\"new data 4\"")};

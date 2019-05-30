@@ -357,15 +357,8 @@ struct mgos_jstore *mgos_jstore_create(const char *json_path, char **perr) {
   }
 
 clean:
-  if (err != NULL) {
-    if (store != NULL) {
-      free(store);
-      store = NULL;
-    }
-  }
-
+  if (err != NULL && store != NULL) store = NULL;
   handle_err(err, perr);
-
   return store;
 }
 
