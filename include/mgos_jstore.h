@@ -154,6 +154,10 @@ bool mgos_jstore_iterate(struct mgos_jstore *store, mgos_jstore_cb cb,
  * In any case, the actual id is returned; the caller should NOT free it,
  * and it remains valid until the store item is freed.
  *
+ * In case `id.p` is NULL. Set `id_own` to either `MGOS_JSTORE_OWN_COPY` or
+ * `MGOS_JSTORE_OWN_RETAIN`. Otherwise the randomly generated id will not be
+ * freed.
+ *
  * Data should be a valid JSON string. Examples of valid data:
  *
  * - Array: `"[\"foo", "bar\"]"`
